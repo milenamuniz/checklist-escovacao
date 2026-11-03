@@ -2,72 +2,23 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<!--
-  Página de entrada do Checklist Escovação (GitHub Pages).
-  Existe só para o celular mostrar o ícone do dente e o nome certo na tela inicial:
-  o Apps Script não deixa o site dizer qual é o ícone. O checklist em si abre aqui dentro.
-  Link do paciente: https://milenamuniz.github.io/checklist-escovacao/?t=<token>
-  Não colocar aqui nenhum dado de paciente (este repositório é público).
--->
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<!-- Endereço antigo do Checklist Escovação. Agora é https://escovacao.github.io/ -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Checklist Escovação</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#2a67a2">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Escovação">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icone-192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-<style>
-  html, body { margin: 0; height: 100%; background: #f2f7fc; }
-  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #1d3a57; }
-  iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
-  .aviso { max-width: 420px; margin: 0 auto; padding: 48px 20px; text-align: center; line-height: 1.5; }
-  .aviso img { width: 96px; height: 96px; border-radius: 22px; }
-</style>
-</head>
-<body>
 <script>
 (function () {
-  var APP = 'https://script.google.com/macros/s/AKfycby487U-CDSs7unPYhnZYrXgAexlG_eJz3PfiaPeCgYPuTw2YtJff8oQ9B8eKMchQFa7/exec';
-  var CHAVE = 'checklist-token';
-  var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
-            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-  var m = /[?&]t=([a-f0-9]{20,})/i.exec(location.search);
-  var token = m ? m[1] : '';
-  try {
-    if (token) localStorage.setItem(CHAVE, token);
-    else token = localStorage.getItem(CHAVE) || '';
-  } catch (e) {}
-
-  // Android usa o manifest; o iPhone usa o endereço atual (com o token) e o apple-touch-icon.
-  if (!ios) {
-    var l = document.createElement('link');
-    l.rel = 'manifest';
-    l.href = 'manifest.webmanifest';
-    document.head.appendChild(l);
+  var q = location.search;
+  if (!/[?&]t=/.test(q)) {
+    try { var t = localStorage.getItem('checklist-token'); if (t) q = '?t=' + encodeURIComponent(t); } catch (e) {}
   }
-
-  // Garante que o endereço salvo na tela inicial leve o token.
-  if (token && !m && history.replaceState) {
-    try { history.replaceState(null, '', '?t=' + token); } catch (e) {}
-  }
-
-  if (token) {
-    var f = document.createElement('iframe');
-    f.src = APP + '?t=' + encodeURIComponent(token);
-    f.title = 'Checklist Escovação';
-    f.allow = 'clipboard-write';
-    document.body.appendChild(f);
-  } else {
-    document.body.innerHTML =
-      '<div class="aviso"><img src="icone-192.png" alt=""><h1>Checklist Escovação</h1>' +
-      '<p>Abra o link pessoal que a equipe da pesquisa enviou pelo WhatsApp.</p></div>';
-  }
+  location.replace('https://escovacao.github.io/' + q);
 })();
 </script>
+</head>
+<body style="font-family:system-ui,sans-serif;text-align:center;padding:48px 20px">
+<p>O Checklist Escovação mudou de endereço: <a href="https://escovacao.github.io/">escovacao.github.io</a></p>
 </body>
 </html>
